@@ -1,0 +1,10 @@
+{
+  "name": "study-facsimile",
+  "version": "1.0.0",
+  "dependencies": [
+    "mongo-c-driver",
+    "mongo-cxx-driver",
+    "sqlite3",
+    "loguru"
+  ]
+}
