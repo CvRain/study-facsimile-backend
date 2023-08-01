@@ -1,6 +1,8 @@
 # study-facsimile-backend
 **CVL-Study学习平台，用c++完成的web后端**
 
+[简体中文](README.zh-CN.md)
+
 # Dependencies
 - c++ version += 17
 - cmake version += 3.20
