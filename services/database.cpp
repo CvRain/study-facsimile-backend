@@ -1,3 +1,7 @@
+//
+// Created by cvrain on 23-8-1.
+//
+
 #include "database.hpp"
 
 Services::MongoDatabase::MongoDatabase(const Services::MongoLinkStruct &link_struct) {
@@ -27,4 +31,9 @@ std::optional<mongocxx::collection> Services::MongoDatabase::GetClient(Services:
     const auto name = CollectionToString.at(collectionName);
     LOG_F(INFO, "MongoDatabase::GetClient: %s", name.data());
     return database.collection(name);
+}
+
+Services::MongoDatabase &Services::MongoDatabase::Create(const Services::MongoLinkStruct &link_struct) {
+    static auto singleton_instance = Services::MongoDatabase(link_struct);
+    return singleton_instance;
 }
