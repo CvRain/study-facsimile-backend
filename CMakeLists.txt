@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.20)
 project(study_facsimile CXX)
 
 include(CheckIncludeFileCXX)
@@ -44,8 +44,12 @@ if (CMAKE_CXX_STANDARD LESS 17)
     target_link_libraries(${PROJECT_NAME} PUBLIC Boost::boost)
 elseif (CMAKE_CXX_STANDARD LESS 20)
     message(STATUS "use c++17")
+    set(CMAKE_CXX_STANDARD 17)
+    target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_17)
 else ()
     message(STATUS "use c++20")
+    set(CMAKE_CXX_STANDARD 20)
+    target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_20)
 endif ()
 
 aux_source_directory(controllers CTL_SRC)
