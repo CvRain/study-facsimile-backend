@@ -5,55 +5,54 @@
 #ifndef STUDY_FACSIMILE_SETTING_SERVICE_HPP
 #define STUDY_FACSIMILE_SETTING_SERVICE_HPP
 
+#include <filesystem>
+#include <fstream>
 #include <json/json.h>
 #include <loguru/loguru.hpp>
-#include <fstream>
-#include <filesystem>
-#include <string>
 #include <optional>
+#include <string>
 
 namespace Services {
 
-    using MongoLinkStruct = struct MongoLinkStruct {
-        std::string host = "localhost";
-        std::string port = "27017";
-        std::string user = "admin";
-        std::string password = "admin";
+using MongoLinkStruct = struct MongoLinkStruct {
+    std::string host = "localhost";
+    std::string port = "27017";
+    std::string user = "admin";
+    std::string password = "admin";
 
-        [[nodiscard]] std::string to_string() const {
-            return "mongodb://" + user + ":" + password + "@" + host + ":" + port;
-        }
-    };
+    [[nodiscard]] std::string to_string() const {
+        return "mongodb://" + user + ":" + password + "@" + host + ":" + port;
+    }
+};
 
-    using ServerSettingStruct = struct ServerSettingStruct {
-        std::string host = "127.0.0.1";
-        int listen = 5280;
-    };
+using ServerSettingStruct = struct ServerSettingStruct {
+    std::string host = "127.0.0.1";
+    int listen = 5280;
+};
 
-    using ServerTotalSetting = struct ServerTotalSetting {
-        MongoLinkStruct mongodb_setting;
-        ServerSettingStruct server_setting;
-    };
+using ServerTotalSetting = struct ServerTotalSetting {
+    MongoLinkStruct mongodb_setting;
+    ServerSettingStruct server_setting;
+};
 
-    class SettingService final {
-    public:
-        static SettingService& Create(const std::string& settingPath = "./settings.json");
-        [[nodiscard]] std::optional<ServerTotalSetting> GetSetting() const;
+class SettingService final {
+public:
+    static SettingService& Create(const std::string& settingPath = "./settings.json");
+    [[nodiscard]] std::optional<ServerTotalSetting> GetSetting() const;
 
-    private:
-        explicit SettingService(const std::string& settingPath = "./settings.json");
+private:
+    explicit SettingService(const std::string& settingPath = "./settings.json");
 
-        ~SettingService() = default;
+    ~SettingService() = default;
 
-        SettingService(const SettingService &) = default;
+    SettingService(const SettingService&) = default;
 
-        SettingService &operator=(const SettingService &) = default;
+    SettingService& operator=(const SettingService&) = default;
 
-    private:
-        std::optional<ServerTotalSetting> server_total;
-    };
+private:
+    std::optional<ServerTotalSetting> server_total;
+};
 
-}
+}  // namespace Services
 
-
-#endif //STUDY_FACSIMILE_SETTING_SERVICE_HPP
+#endif  // STUDY_FACSIMILE_SETTING_SERVICE_HPP
