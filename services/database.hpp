@@ -17,30 +17,34 @@
 #include "setting_service.hpp"
 
 namespace Services {
-using CollectionName = enum { ACCOUNT, COURSE_SETTING };
+    using CollectionName = enum CollectionName {
+        ACCOUNT, COURSE_SETTING
+    };
 
-static const std::map<CollectionName, std::string_view> CollectionToString{
-    std::make_pair(CollectionName::ACCOUNT, "Account"),
-    std::make_pair(CollectionName::COURSE_SETTING, "CourseSetting")};
+    static const std::map<CollectionName, std::string_view> CollectionToString{
+            std::make_pair(CollectionName::ACCOUNT, "Account"),
+            std::make_pair(CollectionName::COURSE_SETTING, "CourseSetting")};
 
-class MongoDatabase {
-public:
-    static MongoDatabase& Create(const MongoLinkStruct& link_struct);
+    class MongoDatabase {
+    public:
+        static MongoDatabase &Create(const MongoLinkStruct &link_struct);
 
-    std::optional<mongocxx::collection> GetClient(CollectionName collectionName);
+        std::optional<mongocxx::collection> GetClient(CollectionName collectionName);
 
-private:
-    explicit MongoDatabase(const MongoLinkStruct& link_struct);
+    private:
+        explicit MongoDatabase(const MongoLinkStruct &link_struct);
 
-    ~MongoDatabase() = default;
+        ~MongoDatabase() = default;
 
-    MongoDatabase(const MongoDatabase&) = default;
+        MongoDatabase(const MongoDatabase &) = delete;
 
-    MongoDatabase& operator=(const MongoDatabase&) = default;
+        MongoDatabase &operator=(const MongoDatabase &) = delete;
 
-private:
-    mongocxx::database database;
-};
+    private:
+        mongocxx::instance instance{};
+        mongocxx::client client;
+        mongocxx::database database;
+    };
 }  // namespace Services
 
 #endif  // STUDY_FACSIMILE_DATABASE_HPP

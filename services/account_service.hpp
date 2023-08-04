@@ -7,6 +7,7 @@
 
 #include <bsoncxx/json.hpp>
 #include <mongocxx/collection.hpp>
+#include <loguru/loguru.hpp>
 
 #include "database.hpp"
 #include "models/account.hpp"
@@ -16,8 +17,12 @@ namespace Services {
 
 class AccountService {
 public:
-    explicit AccountService();
+    static AccountService& Create();
     void CreateBlankAccount();
+    explicit AccountService();
+    ~AccountService() = default;
+    AccountService& operator=(const AccountService&) = default;
+private:
 
 private:
     mongocxx::collection account_collection;
