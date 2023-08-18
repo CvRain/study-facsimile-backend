@@ -27,6 +27,7 @@ int main(int argc, char** argv) {
         try{
             auto account_service = Services::AccountService();
             account_service.CreateBlankAccount();
+            LOG_F(INFO, "Try to create a blank account");
         }catch (const std::exception& e){
             LOG_F(ERROR, "%s", e.what());
             return EXIT_FAILURE;

@@ -31,7 +31,6 @@ std::optional<mongocxx::collection> Services::MongoDatabase::GetClient(Services:
     }
 
     const auto name = CollectionToString.at(collectionName);
-    std::cout << name << std::endl;
     LOG_F(INFO, "MongoDatabase::GetClient: %s", name.data());
     return database.collection(name);
 }
