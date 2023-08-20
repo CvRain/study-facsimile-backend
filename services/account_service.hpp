@@ -19,11 +19,10 @@ class AccountService {
 public:
     static AccountService& Create();
     void CreateBlankAccount();
+private:
     explicit AccountService();
     ~AccountService() = default;
     AccountService& operator=(const AccountService&) = default;
-private:
-
 private:
     mongocxx::collection account_collection;
 };

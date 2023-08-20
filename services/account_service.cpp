@@ -26,16 +26,22 @@ namespace Services {
     }
 
     void AccountService::CreateBlankAccount() {
-        auto account = new Models::Account();
-        account->id = bsoncxx::oid{};
+        auto* account = new Models::Account();
         account->name = "Default user";
         account->password = "qwe123";
+        account->email = "default@default.com";
+        std::cout << account->name << std::endl;
+        std::cout << account->password << std::endl;
+        std::cout << account->email << std::endl;
+
+        auto account2 = new Models::Account();
+        account2->from_document(account->to_document());
+        std::cout << account2->name << std::endl;
+        std::cout << account2->password << std::endl;
+        std::cout << account2->email << std::endl;
 
         try {
-            const auto view = account->to_document();
-            std::cout << view.find("name")->get_string().value << std::endl;
-            //LOG_F(INFO, "Account: %s", view["name"].get_string().value);
-            const auto result = account_collection.insert_one(view);
+            const auto result = account_collection.insert_one(account->to_document().view());
         }catch (const std::exception& e){
             LOG_F(ERROR, "%s", e.what());
         }

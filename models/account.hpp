@@ -14,13 +14,17 @@
 #include <vector>
 
 namespace Models {
-    class Account : public Models::BaseMongoObject {
+    class Account{
     public:
-        bsoncxx::oid id;
+        Account() = default;
+        Account(const Account& account);
+        Account operator =  (const Account& account);
+        bsoncxx::oid id{};
         std::string name;
         std::string password;
-        bsoncxx::document::view to_document() override;
-        void from_document(const bsoncxx::document::view& document) override;
+        std::string email;
+        bsoncxx::builder::basic::document to_document();
+        void from_document(const bsoncxx::document::view& document);
     };
 }
 
